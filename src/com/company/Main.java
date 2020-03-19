@@ -15,12 +15,15 @@ public class Main {
 
         try {
             uploader.join();
-            for (int i = 1; i < 10; i++) {
-                Semaphore semaphore = new Semaphore(3,true);
-                CountDownLatch CDL = new CountDownLatch(10);
-                new Downloader(500,100, semaphore, CDL).start();
+            for (int i = 1; i <= 10; i++) {
+                /*Semaphore semaphore = new Semaphore(3, true);
+                CountDownLatch CDL = new CountDownLatch(10);*/
+                new Downloader(new Semaphore(3,true), new CountDownLatch(10), 500,
+                        100).start();
+                if (i == 10){
+                    System.out.println("Файл удалён");
+                }
             }
-
-        } catch (InterruptedException IE) { }
+        } catch (Exception E) { }
     }
 }
